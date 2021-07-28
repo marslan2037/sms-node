@@ -28,7 +28,6 @@ const studentSchema = new mongoose.Schema({
     previous_school: {
         type: String
     },
-
     country: {
         type: String,
         required: true,
@@ -54,7 +53,6 @@ const studentSchema = new mongoose.Schema({
         required: true,
         min: 1,
     },
-
     father_name: {
         type: String,
         required: true,

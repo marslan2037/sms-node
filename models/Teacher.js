@@ -14,56 +14,50 @@ const teacherSchema = new mongoose.Schema({
     cnic: {
         type: String,
         required: true,
-        min: 3,
+        min: 13,
+        max: 15
     },
     phone_number: {
         type: String,
         required: true,
         min: 11,
+        max: 11
     },
     qualification: {
         type: String,
         required: true,
-        min: 11,
+        min: 3,
     },
     experience: {
         type: String,
         required: true,
-        min: 11,
+        min: 1,
     },
-    subjects: {
+    country: {
         type: String,
         required: true,
-        min: 11,
+        min: 3,
     },
-
     city: {
         type: String,
         required: true,
-        min: 11,
+        min: 3,
+    },
+    mohallah: {
+        type: String,
+        required: true,
+        min: 3,
     },
     street: {
         type: String,
         required: true,
-        min: 11,
+        min: 1,
     },
     house_number: {
         type: String,
         required: true,
-        min: 11,
+        min: 1,
     },
-
-    father_name: {
-        type: String,
-        required: true,
-        min: 11,
-    },
-    father_cnic: {
-        type: String,
-        required: true,
-        min: 11,
-    },
-
     date: {
         type: Date,
         default: Date.now
