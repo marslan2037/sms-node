@@ -1,12 +1,22 @@
 const mongoose = require('mongoose');
 
 const teacherSchema = new mongoose.Schema({
+    teacher_id: {
+        type: String,
+        required: true,
+        min: 3
+    },
     first_name: {
         type: String,
         required: true,
         min: 3,
     },
     last_name: {
+        type: String,
+        required: true,
+        min: 3,
+    },
+    email: {
         type: String,
         required: true,
         min: 3,

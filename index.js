@@ -14,7 +14,8 @@ mongoose
     .connect(process.env.MONGO_DEV_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex: true,   })   
+        useCreateIndex: true,   
+    })   
     .then(() => console.log("Database connected!"))
     .catch(err => console.log(err));
 
@@ -31,16 +32,13 @@ app.all('/*', function (req, res, next) {
     next();
 });
 
-courses = [
-    {id: 1, name: 'Course 1'},
-    {id: 2, name: 'Course 2'},
-    {id: 3, name: 'Course 3'},
-];
-
-
-
+//STUDENTS ROUTES
 const studentRoutes = require('./routes/studentRoutes');
 app.use('/api/user/students', studentRoutes);
+
+//TEACHER ROUTES
+const teacherRoutes = require('./routes/teacherRoutes');
+app.use('/api/user/teachers', teacherRoutes);
 
 app.use(express.json());
 

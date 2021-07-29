@@ -5,7 +5,7 @@ const { StudentValidation } = require('../validation');
 
 router.get('/', async (req, res) => {
     const students = await Student.find();
-    if(!students) return res.status(404).send('No record found!');
+    if(!students) return res.status(400).send('Something went wrong!');
 
     try {
         res.status(200).send(students);
