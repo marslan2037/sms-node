@@ -24,8 +24,7 @@ const teacherSchema = new mongoose.Schema({
     cnic: {
         type: String,
         required: true,
-        min: 13,
-        max: 15
+        min: 13
     },
     phone_number: {
         type: String,

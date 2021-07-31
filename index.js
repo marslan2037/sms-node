@@ -17,7 +17,10 @@ mongoose
         useCreateIndex: true,   
     })   
     .then(() => console.log("Database connected!"))
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log('going to display connection error ')
+        console.log(err)
+    });
 
 // Configuring body parser middleware
 // parse application/x-www-form-urlencoded
@@ -39,6 +42,10 @@ app.use('/api/user/students', studentRoutes);
 //TEACHER ROUTES
 const teacherRoutes = require('./routes/teacherRoutes');
 app.use('/api/user/teachers', teacherRoutes);
+
+//FEE ROUTES
+const feeRoutes = require('./routes/feeRoutes');
+app.use('/api/fee', feeRoutes);
 
 app.use(express.json());
 

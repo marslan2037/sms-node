@@ -18,7 +18,7 @@ const studentSchema = new mongoose.Schema({
     },
     b_form: {
         type: String,
-        min: 11,
+        min: 13,
     },
     class: {
         type: String,
@@ -61,8 +61,7 @@ const studentSchema = new mongoose.Schema({
     father_cnic: {
         type: String,
         required: true,
-        min: 13,
-        max: 15
+        min: 13
     },
     phone_number: {
         type: String,
