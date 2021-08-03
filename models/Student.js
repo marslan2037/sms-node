@@ -6,6 +6,10 @@ const studentSchema = new mongoose.Schema({
         required: true,
         min: 2,
     },
+    computer_number: {
+        type: String,
+        min: 2,
+    },
     first_name: {
         type: String,
         required: true,

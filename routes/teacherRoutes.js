@@ -26,6 +26,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/new', async (req, res) => {
+
+    //GENERATE COMPUTER NUMBER FOR STUDENTS
+    let total_teachers = await Teacher.find();
+    let computer_number = 'pps-tch-00'+(parseInt(total_teachers.length) + 1);
+
     const { error } = TeacherValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -34,6 +39,7 @@ router.post('/new', async (req, res) => {
 
     const teacher = new Teacher({
         teacher_id: req.body.teacher_id,
+        computer_number: computer_number,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
@@ -69,6 +75,7 @@ router.patch('/:id', async (req, res) => {
             {
                 $set: {
                     teacher_id: req.body.teacher_id,
+                    computer_number: teacherExists.computer_number,
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
                     email: req.body.email,

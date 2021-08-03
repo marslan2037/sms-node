@@ -42,6 +42,8 @@ const TeacherValidation = (data) => {
 const FeeValidation = (data) => {
     const schema = {
         roll_number: Joi.string().min(2).required(),
+        computer_number: Joi.string().min(2).required(),
+        name: Joi.string().min(2).required(),
         class: Joi.string().min(1).required(),
         month: Joi.string().min(1).required(),
         amount: Joi.number().min(1).required(),

@@ -6,6 +6,10 @@ const teacherSchema = new mongoose.Schema({
         required: true,
         min: 3
     },
+    computer_number: {
+        type: String,
+        min: 2,
+    },
     first_name: {
         type: String,
         required: true,

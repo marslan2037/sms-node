@@ -64,6 +64,7 @@ router.post('/fetch-student', async (req, res) => {
     
     let data = {
         name: student.first_name+' '+student.last_name,
+        computer_number: student.computer_number,
         class: student.class,
         father_name: student.father_name,
         amount: amount
@@ -88,10 +89,13 @@ router.post('/new', async (req, res) => {
         class: req.body.class,
         month: req.body.month
     });
+
     if(fee_exist) return res.status(400).send('Already Paid'); 
 
     const fee = new Fee({
         roll_number: req.body.roll_number,
+        computer_number: req.body.computer_number,
+        name: req.body.name,
         class: req.body.class,
         month: req.body.month,
         amount: req.body.amount,

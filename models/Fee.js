@@ -6,6 +6,16 @@ const feeSchema = new mongoose.Schema({
         required: true,
         min: 2,
     },
+    computer_number: {
+        type: String,
+        required: true,
+        min: 2,
+    },
+    name: {
+        type: String,
+        required: true,
+        min: 2
+    },
     class: {
         type: String,
         required: true,

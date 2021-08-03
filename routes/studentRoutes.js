@@ -26,6 +26,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/new', async (req, res) => {
+
+    //GENERATE COMPUTER NUMBER FOR STUDENTS
+    let total_students = await Student.find();
+    let computer_number = 'pps-std-00'+(parseInt(total_students.length) + 1);
+
     const { error } = StudentValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -34,10 +39,11 @@ router.post('/new', async (req, res) => {
 
     const student = new Student({
         roll_number: req.body.roll_number,
+        computer_number: computer_number,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         b_form: req.body.b_form,
-        class: req.body.class,
+        class: (req.body.class).toLowerCase(),
         previous_school: req.body.previous_school,
         country: req.body.country,
         city: req.body.city,
@@ -70,6 +76,7 @@ router.patch('/:id', async (req, res) => {
             {
                 $set: {
                     roll_number: req.body.roll_number,
+                    computer_number: studentExists.computer_number,
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
                     b_form: req.body.b_form,
