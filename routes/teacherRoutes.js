@@ -1,9 +1,10 @@
 
 const router = require('express').Router();
 const Teacher = require('../models/Teacher');
+const verify = require('../verifyToken');
 const { TeacherValidation } = require('../validation');
 
-router.get('/', async (req, res) => {
+router.get('/', verify, async (req, res) => {
     const teachers = await Teacher.find();
     if(!teachers) return res.status(400).send('Something went wrong!');
     
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
     const teacher = await Teacher.findOne({_id: req.params.id});
     if(!teacher) return res.status(404).send('No record found!');
 
@@ -25,7 +26,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/new', async (req, res) => {
+router.post('/new', verify, async (req, res) => {
 
     //GENERATE COMPUTER NUMBER FOR STUDENTS
     let total_teachers = await Teacher.find();
@@ -62,7 +63,7 @@ router.post('/new', async (req, res) => {
     }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', verify, async (req, res) => {
     const teacherExists = await Teacher.findOne({_id: req.params.id});
     if(!teacherExists) return res.status(404).send('Teacher not found');
 
@@ -97,7 +98,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     const teacherExists = await Teacher.findOne({_id: req.params.id});
     if(!teacherExists) return res.status(404).send("Teacher not found");
     

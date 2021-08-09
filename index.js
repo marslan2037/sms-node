@@ -26,11 +26,10 @@ mongoose
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.all('/*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", CONFIG.ALLOW_DOMAIN);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, auth-token");
     res.header("Access-Control-Allow-Credentials", true);
     next();
 });
@@ -46,6 +45,10 @@ app.use('/api/user/teachers', teacherRoutes);
 //FEE ROUTES
 const feeRoutes = require('./routes/feeRoutes');
 app.use('/api/fee', feeRoutes);
+
+//USER ROUTES
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/user', userRoutes);
 
 app.use(express.json());
 

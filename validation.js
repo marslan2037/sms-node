@@ -6,6 +6,9 @@ const StudentValidation = (data) => {
         first_name: Joi.string().min(3).required(),
         last_name: Joi.string().min(3).required(),
         b_form: Joi.string().min(13),
+        date_of_birth: Joi.string().min(2).required(),
+        nationality: Joi.string().min(2).required(),
+        religion: Joi.string().min(2).required(),
         class: Joi.string().min(1).required(),
         previous_school: Joi.string(),
         country: Joi.string().min(3).required(),
@@ -15,6 +18,8 @@ const StudentValidation = (data) => {
         house_number: Joi.string().min(1).required(),
         father_name: Joi.string().min(3).required(),
         father_cnic: Joi.string().min(13).required(),
+        father_occupation: Joi.string().min(2).required(),
+        father_education: Joi.string().min(2).required(),
         phone_number: Joi.string().min(11).max(13).required(),
     }
     return Joi.object(schema).validate(data);
@@ -48,7 +53,26 @@ const FeeValidation = (data) => {
         month: Joi.string().min(1).required(),
         amount: Joi.number().min(1).required(),
         remaining_amount: Joi.number().min(0).required(),
+        arrears: Joi.number().min(0).required(),
         status: Joi.string().min(4).max(6).required(),
+    }
+    return Joi.object(schema).validate(data);
+}
+
+const RegisterUserValidation = (data) => {
+    const schema = {
+        first_name: Joi.string().min(3).required(),
+        last_name: Joi.string().min(3).required(),
+        email: Joi.string().min(6).required().email(),
+        password: Joi.string().min(6).required(),
+    }
+    return Joi.object(schema).validate(data);
+}
+
+const LoginValidation = (data) => {
+    const schema = {
+        email: Joi.string().min(6).required().email(),
+        password: Joi.string().min(6).required(),
     }
     return Joi.object(schema).validate(data);
 }
@@ -56,3 +80,5 @@ const FeeValidation = (data) => {
 module.exports.StudentValidation = StudentValidation;
 module.exports.TeacherValidation = TeacherValidation;
 module.exports.FeeValidation = FeeValidation;
+module.exports.RegisterUserValidation = RegisterUserValidation;
+module.exports.LoginValidation = LoginValidation;

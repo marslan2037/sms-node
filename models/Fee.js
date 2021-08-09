@@ -36,6 +36,11 @@ const feeSchema = new mongoose.Schema({
         required: true,
         min: 0,
     },
+    arrears: {
+        type: Number,
+        required: true,
+        min: 0,
+    },
     status: {
         type: String,
         required: true,

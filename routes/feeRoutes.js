@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const Fee = require('../models/Fee');
+const verify = require('../verifyToken');
 const Student = require('../models/Student');
 const { FeeValidation } = require('../validation');
 
-router.get('/paid', async (req, res) => {
+router.get('/paid', verify, async (req, res) => {
     const fees = await Fee.find();
     if(!fees) return res.status(400).send('Something went wrong!');
 
@@ -14,7 +15,7 @@ router.get('/paid', async (req, res) => {
     }
 });
 
-router.get('/unpaid', async (req, res) => {
+router.get('/unpaid', verify, async (req, res) => {
     const fees = await Fee.find();
     if(!fees) return res.status(400).send('Something went wrong!');
 
@@ -26,14 +27,17 @@ router.get('/unpaid', async (req, res) => {
     //     // !fees.includes(x.roll_number)
     // });
 
-    let result = [];
-    for(let i=0; i<students.length; i++) {
-        const found = fees.some(el => el.roll_number === students[i].roll_number && el.class === students[i].class);
+    // let intersection = students.filter((x) => {
+    //     console.log(x)
+    //     fees.includes(x.roll_number)
+    // });
 
-        if(!found) {
-            result.push(students[i]);
-        }
-    }
+    let result = students.filter((x) => {
+        fees.some((y) => {
+            x.roll_number != y.roll_number && x.class != y.class
+        })
+    });  
+
 
     try {
         res.status(200).send(result);
@@ -42,32 +46,25 @@ router.get('/unpaid', async (req, res) => {
     }
 });
 
-router.post('/fetch-student', async (req, res) => {
+router.post('/fetch-student', verify, async (req, res) => {
     const student = await Student.findOne({
         roll_number: req.body.roll_number,
         class: req.body.class
     });
     if(!student) return res.status(404).send('Student not found');
 
-    let amount = 0;
-    if(student.class == 1 || student.class == '1' || student.class == 'One') {
-        amount = 1500;
-    } else if(student.class == 2 || student.class == '2' || student.class == 'Two') {
-        amount = 2000;
-    } else if(student.class == 3 || student.class == '3' || student.class == 'Three') {
-        amount = 2500;
-    } else if(student.class == 4 || student.class == '4' || student.class == 'Four') {
-        amount = 3000;
-    } else if(student.class == 5 || student.class == '5' || student.class == 'Five') {
-        amount = 4000;
-    }
+    let amount = 1500;
+    let remaining_amount = 0;
+    let arrears = 0;
     
     let data = {
         name: student.first_name+' '+student.last_name,
         computer_number: student.computer_number,
         class: student.class,
         father_name: student.father_name,
-        amount: amount
+        amount: amount,
+        remaining_amount: remaining_amount,
+        arrears: arrears
     }
 
     try {
@@ -77,7 +74,7 @@ router.post('/fetch-student', async (req, res) => {
     }
 });
 
-router.post('/new', async (req, res) => {
+router.post('/new', verify, async (req, res) => {
     const { error } = FeeValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -100,6 +97,7 @@ router.post('/new', async (req, res) => {
         month: req.body.month,
         amount: req.body.amount,
         remaining_amount: req.body.remaining_amount,
+        arrears: req.body.arrears,
         status: req.body.status
     });
 
@@ -111,7 +109,7 @@ router.post('/new', async (req, res) => {
     }
 });
 
-router.get('/paid/:id', async (req, res) => {
+router.get('/paid/:id', verify, async (req, res) => {
     const fee = await Fee.findOne({_id: req.params.id});
     if(!fee) return res.status(404).send("Fee not found");
 
@@ -122,7 +120,7 @@ router.get('/paid/:id', async (req, res) => {
     }
 });
 
-router.patch('/paid/:id', async (req, res) => {
+router.patch('/paid/:id', verify, async (req, res) => {
     const { error } = FeeValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -149,7 +147,7 @@ router.patch('/paid/:id', async (req, res) => {
     }
 });
 
-router.delete('/paid/:id', async (req, res) => {
+router.delete('/paid/:id', verify, async (req, res) => {
     const feeExists = await Fee.findOne({_id: req.params.id});
     if(!feeExists) return res.status(404).send("Fee not found");
     console.log(feeExists)

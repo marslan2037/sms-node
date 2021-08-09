@@ -29,6 +29,21 @@ const studentSchema = new mongoose.Schema({
         required: true,
         min: 1,
     },
+    religion: {
+        type: String,
+        required: true,
+        min: 2
+    },
+    nationality: {
+        type: String,
+        required: true,
+        min: 2
+    },
+    date_of_birth: {
+        type: String,
+        required: true,
+        min: 2
+    },
     previous_school: {
         type: String
     },
@@ -72,6 +87,16 @@ const studentSchema = new mongoose.Schema({
         required: true,
         min: 11,
         max: 11
+    },
+    father_occupation: {
+        type: String,
+        required: true,
+        min: 2
+    },
+    father_education: {
+        type: String,
+        required: true,
+        min: 2
     },
     date: {
         type: Date,
