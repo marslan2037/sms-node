@@ -34,12 +34,17 @@ router.get('/unpaid', verify, async (req, res) => {
     for(let i = 0; i < students.length; i++) {
         let matchFound = false;
         matchedStudents = await Fee.find({computer_number: students[i].computer_number});
+
+        console.log('matched students')
+        console.log(matchedStudents)
         
         for(let x = 0; x < matchedStudents.length; x++) {
             if(moment(matchedStudents[x].month).format('MM/YYYY') == current_month) {
                 matchFound = true;
             }
         }
+
+        console.log('match found is '+matchFound)
         
         if(!matchFound) {
             data.push(students[i]);
