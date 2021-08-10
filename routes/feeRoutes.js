@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Fee = require('../models/Fee');
 const verify = require('../verifyToken');
 const Student = require('../models/Student');
+const moment = require('moment');
 const { FeeValidation } = require('../validation');
 
 router.get('/paid', verify, async (req, res) => {
@@ -22,25 +23,29 @@ router.get('/unpaid', verify, async (req, res) => {
     const students = await Student.find();
     if(!students) return res.status(400).send('Something went wrong!');
 
-    // let result = students.filter(x => {
-    //     console.log(x)
-    //     // !fees.includes(x.roll_number)
-    // });
+    let temp_date = new Date();
+    let current_month = moment(temp_date).format('MM/YYYY');
+    
+    let data = [];
+    let matchedStudents;
 
-    // let intersection = students.filter((x) => {
-    //     console.log(x)
-    //     fees.includes(x.roll_number)
-    // });
-
-    let result = students.filter((x) => {
-        fees.some((y) => {
-            x.roll_number != y.roll_number && x.class != y.class
-        })
-    });  
-
+    for(let i = 0; i < students.length; i++) {
+        let matchFound = false;
+        matchedStudents = await Fee.find({computer_number: students[i].computer_number});
+        
+        for(let x = 0; x < matchedStudents.length; x++) {
+            if(moment(matchedStudents[x].month).format('MM/YYYY') == current_month) {
+                matchFound = true;
+            }
+        }
+        
+        if(!matchFound) {
+            data.push(students[i]);
+        }
+    } 
 
     try {
-        res.status(200).send(result);
+        res.status(200).send(data);
     } catch(error) {
         res.status(400).send(error);
     }
