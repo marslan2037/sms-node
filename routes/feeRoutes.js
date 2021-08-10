@@ -39,7 +39,7 @@ router.get('/unpaid', verify, async (req, res) => {
         console.log(matchedStudents)
         
         for(let x = 0; x < matchedStudents.length; x++) {
-            if(moment(matchedStudents[x].month).format('MM/YYYY') == current_month) {
+            if(moment(matchedStudents[x].month).tz('UTC').format('MM/YYYY') == current_month) {
                 matchFound = true;
             }
         }
