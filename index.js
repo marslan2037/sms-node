@@ -22,10 +22,8 @@ mongoose
         console.log(err)
     });
 
-// Configuring body parser middleware
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.set( 'port', ( process.env.PORT || 3000 ));
+
 app.all('/*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", CONFIG.ALLOW_DOMAIN);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
@@ -33,6 +31,11 @@ app.all('/*', function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
     next();
 });
+
+// Configuring body parser middleware
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //STUDENTS ROUTES
 const studentRoutes = require('./routes/studentRoutes');
@@ -61,4 +64,6 @@ app.get('/api/courses', (req, res) => {
     res.send(courses);
 })
 
-app.listen(3000, () => console.log('Listening to 3000'))
+app.listen( app.get( 'port' ), function() {
+    console.log( 'Node server is running on port ' + app.get( 'port' ));
+});
