@@ -55,6 +55,11 @@ router.get('/unpaid', verify, async (req, res) => {
 
     console.log(data)
 
+
+    console.log(new Date());
+    console.log(moment());
+    console.log(moment.utc());
+
     try {
         res.status(200).send(data);
     } catch(error) {
