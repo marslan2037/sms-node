@@ -5,8 +5,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { RegisterUserValidation, LoginValidation } = require('../validation');
 
-var CONFIG = require('../config');
-
 router.get('/test', async (req, res) => {
     res.send('It works');
 });
@@ -21,7 +19,7 @@ router.post('/login', async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if(!validPassword) return res.status(400).send("Invalid password");
 
-    const token = jwt.sign({_id: user._id}, CONFIG.TOKEN_SECERET);
+    const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECERET);
 
     let data = {
         name: user.first_name+' '+user.last_name,
