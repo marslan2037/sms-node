@@ -115,6 +115,8 @@ router.post('/new', verify, async (req, res) => {
         status: req.body.status
     });
 
+    console.log(req.body.month)
+
     try {
         const savedFee = await fee.save();
         res.send(savedFee);
