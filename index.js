@@ -37,6 +37,10 @@ app.all('/*', function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+    res.send('Hello World')
+})
+
 //STUDENTS ROUTES
 const studentRoutes = require('./routes/studentRoutes');
 app.use('/api/user/students', studentRoutes);
