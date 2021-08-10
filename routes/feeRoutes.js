@@ -27,8 +27,6 @@ router.get('/unpaid', verify, async (req, res) => {
     console.log(temp_date)
     let current_month = moment(temp_date).format('MM/YYYY');
 
-    console.log(current_month)
-    
     let data = [];
     let matchedStudents;
 
@@ -36,30 +34,18 @@ router.get('/unpaid', verify, async (req, res) => {
         let matchFound = false;
         matchedStudents = await Fee.find({computer_number: students[i].computer_number});
 
-        console.log('matched students')
-        console.log(matchedStudents)
-        
         for(let x = 0; x < matchedStudents.length; x++) {
             // console.log(moment(matchedStudents[x].month).add(1, 'months').format('MM/YYYY'))
             if(matchedStudents[x].month == current_month) {
                 matchFound = true;
             }
         }
-
-        console.log('match found is '+matchFound)
         
         if(!matchFound) {
             data.push(students[i]);
         }
     } 
-
-    console.log(data)
-
-
-    console.log(new Date());
-    console.log(moment());
-    console.log(moment.utc());
-
+    
     try {
         res.status(200).send(data);
     } catch(error) {
@@ -122,8 +108,6 @@ router.post('/new', verify, async (req, res) => {
         arrears: req.body.arrears,
         status: req.body.status
     });
-
-    console.log(req.body.month)
 
     try {
         const savedFee = await fee.save();
