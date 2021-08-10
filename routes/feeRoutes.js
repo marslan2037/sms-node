@@ -25,6 +25,8 @@ router.get('/unpaid', verify, async (req, res) => {
 
     let temp_date = new Date();
     let current_month = moment(temp_date).format('MM/YYYY');
+
+    console.log(current_month)
     
     let data = [];
     let matchedStudents;
