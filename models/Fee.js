@@ -26,6 +26,11 @@ const feeSchema = new mongoose.Schema({
         required: true,
         min: 1
     },
+    month_full: {
+        type: String,
+        required: true,
+        min: 1
+    },
     amount: {
         type: Number,
         required: true,

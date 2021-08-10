@@ -116,6 +116,7 @@ router.post('/new', verify, async (req, res) => {
         name: req.body.name,
         class: req.body.class,
         month: req.body.month,
+        month_full: req.body.month_full,
         amount: req.body.amount,
         remaining_amount: req.body.remaining_amount,
         arrears: req.body.arrears,
@@ -158,6 +159,7 @@ router.patch('/paid/:id', verify, async (req, res) => {
                     roll_number: req.body.roll_number,
                     class: req.body.class,
                     month: req.body.month,
+                    month_full: req.body.month_full,
                     amount: req.body.amount,
                     remaining_amount: req.body.remaining_amount,
                     status: req.body.status

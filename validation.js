@@ -51,6 +51,7 @@ const FeeValidation = (data) => {
         name: Joi.string().min(2).required(),
         class: Joi.string().min(1).required(),
         month: Joi.string().min(1).required(),
+        month_full: Joi.string().min(1).required(),
         amount: Joi.number().min(1).required(),
         remaining_amount: Joi.number().min(0).required(),
         arrears: Joi.number().min(0).required(),
