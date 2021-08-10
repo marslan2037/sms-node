@@ -5,6 +5,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { RegisterUserValidation, LoginValidation } = require('../validation');
 
+router.get('/test', async (req, res) => {
+    res.send('It works');
+});
+
 router.post('/login', async (req, res) => {
     const { error } = LoginValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
