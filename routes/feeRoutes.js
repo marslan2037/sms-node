@@ -44,6 +44,8 @@ router.get('/unpaid', verify, async (req, res) => {
         }
     } 
 
+    console.log(data)
+
     try {
         res.status(200).send(data);
     } catch(error) {
