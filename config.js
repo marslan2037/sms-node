@@ -5,4 +5,4 @@ exports.ALLOW_DOMAIN='school.markupsoft.com'; // For Production
 
 
 exports.MONGO_DEV_URI = 'mongodb+srv://marslan2037:50494899Ss@cluster0.5kys3.mongodb.net/sms?retryWrites=true&w=majority';
-exports.TOKEN_SECERET = zdnfinsdfoklsmdgon
+exports.TOKEN_SECERET = 'zdnfinsdfoklsmdgon'
