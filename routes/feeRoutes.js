@@ -132,6 +132,9 @@ router.patch('/paid/:id', verify, async (req, res) => {
     const { error } = FeeValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
+    const fee = await Fee.findOne({_id: req.params.id});
+    if(!fee) return res.status(404).send("Fee not found");
+
     const amount = req.body.amount;
     if(amount <= 0) return res.status(400).send('Please enter fee to proceed');
 
@@ -150,7 +153,7 @@ router.patch('/paid/:id', verify, async (req, res) => {
                 }
             }
         );
-        res.status(200).send('Fee record is updated');
+        res.status(200).send(fee);
     } catch(error) {
         res.status(400).send(error);
     }
