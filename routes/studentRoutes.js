@@ -43,8 +43,9 @@ router.post('/new', verify, async (req, res) => {
     const student = new Student({
         roll_number: req.body.roll_number,
         computer_number: computer_number,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        name: req.body.name,
+        gender: req.body.gender,
+        fee: req.body.fee,
         date_of_birth: req.body.date_of_birth,
         nationality: req.body.nationality,
         religion: req.body.religion,
@@ -85,7 +86,9 @@ router.patch('/:id', verify, async (req, res) => {
                 $set: {
                     roll_number: req.body.roll_number,
                     computer_number: studentExists.computer_number,
-                    first_name: req.body.first_name,
+                    name: req.body.name,
+                    gender: req.body.gender,
+                    fee: req.body.fee,
                     last_name: req.body.last_name,
                     date_of_birth: req.body.date_of_birth,
                     nationality: req.body.nationality,
@@ -106,7 +109,7 @@ router.patch('/:id', verify, async (req, res) => {
                 }
             }
         );
-        res.status(200).send('Student record is updated');
+        res.status(200).send(req.params.id);
     } catch(error) {
         res.status(400).send(error);
     }

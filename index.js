@@ -41,6 +41,10 @@ app.get('/', (req, res) => {
     res.send('Hello World')
 })
 
+//CLASS ROUTES
+const classRoutes = require('./routes/classRoutes');
+app.use('/api/class', classRoutes);
+
 //STUDENTS ROUTES
 const studentRoutes = require('./routes/studentRoutes');
 app.use('/api/user/students', studentRoutes);

@@ -10,15 +10,21 @@ const studentSchema = new mongoose.Schema({
         type: String,
         min: 2,
     },
-    first_name: {
+    name: {
         type: String,
         required: true,
         min: 3,
     },
-    last_name: {
+    gender: {
         type: String,
         required: true,
-        min: 3,
+        min: 4,
+        max: 6
+    },
+    fee: {
+        type: Number,
+        required: true,
+        min: 0
     },
     b_form: {
         type: String,

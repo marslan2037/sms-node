@@ -1,10 +1,18 @@
 const Joi = require('joi');
 
+const ClassValidation = (data) => {
+    const schema = {
+        name: Joi.string().min(1).required(),
+    }
+    return Joi.object(schema).validate(data);
+}
+
 const StudentValidation = (data) => {
     const schema = {
         roll_number: Joi.string().min(2).required(),
-        first_name: Joi.string().min(3).required(),
-        last_name: Joi.string().min(3).required(),
+        name: Joi.string().min(3).required(),
+        gender: Joi.string().min(3).max(6).required(),
+        fee: Joi.number().min(0).required(),
         b_form: Joi.string().min(13),
         date_of_birth: Joi.string().min(2).required(),
         nationality: Joi.string().min(2).required(),
@@ -78,6 +86,7 @@ const LoginValidation = (data) => {
     return Joi.object(schema).validate(data);
 }
 
+module.exports.ClassValidation = ClassValidation;
 module.exports.StudentValidation = StudentValidation;
 module.exports.TeacherValidation = TeacherValidation;
 module.exports.FeeValidation = FeeValidation;
