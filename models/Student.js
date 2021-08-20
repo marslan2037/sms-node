@@ -40,6 +40,12 @@ const studentSchema = new mongoose.Schema({
         required: true,
         min: 2
     },
+    status: {
+        type: String,
+        required: true,
+        min: 6,
+        max: 8
+    },
     nationality: {
         type: String,
         required: true,

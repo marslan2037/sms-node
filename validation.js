@@ -29,6 +29,7 @@ const StudentValidation = (data) => {
         father_occupation: Joi.string().min(2).required(),
         father_education: Joi.string().min(2).required(),
         phone_number: Joi.string().min(11).max(13).required(),
+        status: Joi.string().min(6).max(8).required(),
     }
     return Joi.object(schema).validate(data);
 }

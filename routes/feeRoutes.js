@@ -16,6 +16,19 @@ router.get('/paid', verify, async (req, res) => {
     }
 });
 
+router.get('/:cn', verify, async (req, res) => {
+    const singleStudentFeeRecord = await Fee.find({computer_number: req.params.cn});
+
+    console.log(singleStudentFeeRecord)
+    if(!singleStudentFeeRecord) return res.status(400).send('Something went wrong!');
+
+    try {
+        res.status(200).send(singleStudentFeeRecord);
+    } catch(error) {
+        res.status(400).send(error);
+    }
+});
+
 router.get('/unpaid', verify, async (req, res) => {
     const fees = await Fee.find();
     if(!fees) return res.status(400).send('Something went wrong!');
@@ -55,21 +68,20 @@ router.get('/unpaid', verify, async (req, res) => {
 
 router.post('/fetch-student', verify, async (req, res) => {
     const student = await Student.findOne({
-        roll_number: req.body.roll_number,
-        class: req.body.class
+        computer_number: req.body.computer_number
     });
     if(!student) return res.status(404).send('Student not found');
 
-    let amount = 1500;
     let remaining_amount = 0;
     let arrears = 0;
-    
+
     let data = {
-        name: student.first_name+' '+student.last_name,
+        roll_number: student.roll_number,
+        name: student.name,
         computer_number: student.computer_number,
         class: student.class,
         father_name: student.father_name,
-        amount: amount,
+        amount: student.fee,
         remaining_amount: remaining_amount,
         arrears: arrears
     }
@@ -89,8 +101,9 @@ router.post('/new', verify, async (req, res) => {
     if(amount <= 0) return res.status(400).send('Please enter fee to proceed');
 
     const fee_exist = await Fee.findOne({
-        roll_number: req.body.roll_number,
-        class: req.body.class,
+        // roll_number: req.body.roll_number,
+        // class: req.body.class,
+        computer_number: req.body.computer_number,
         month: req.body.month
     });
 

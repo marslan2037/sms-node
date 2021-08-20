@@ -8,10 +8,8 @@ router.get('/', verify, async (req, res) => {
     const classes = await Class.find();
     if(!classes) return res.status(400).send('Something went wrong!');
 
-    let data = (classes.length > 0) ? classes : [];
-
     try {
-        res.status(200).send(data);
+        res.status(200).send(classes);
     } catch(error) {
         res.status(400).send(error);
     }
